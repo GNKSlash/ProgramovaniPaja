@@ -101,3 +101,4 @@ while bezi:
     hodiny.tick(60)       # Rychlost hry (60 snímků za sekundu)
 
 pygame.quit()
+
