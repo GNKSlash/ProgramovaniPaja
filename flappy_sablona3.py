@@ -185,6 +185,18 @@ TLACITKA = [
 # ============================================================
 
 def nakresli_menu(povrch):
+    if img_pozadi:
+        povrch.blit(img_pozadi, (0, 0))
+    else:
+        povrch.fill(BARVA_POZADI)
+
+    napis = font_velky.render("Flappy Brno", True, BARVA_TEXT)
+    povrch.blit(napis, (SIRKA // 2 - napis.get_width() // 2, 100))
+
+    for tlacitko in TLACITKA:
+        nakresli_tlacitko(povrch, tlacitko["text"], tlacitko["rect"], BARVA_TLACITKO)
+
+
     pass   # ← toto smažte a napište svůj kód
 
 
@@ -221,7 +233,33 @@ def nakresli_menu(povrch):
 
 # --- Sem napište funkci menu() ---
 
+def menu():
+    global zvuky_zapnuty
+    while True:
+        hodiny.tick(FPS)
+        
+        for udalost in pygame.event.get():
+            if udalost.type == pygame.QUIT:
+                pygame.quit()
+                return
+            if udalost.type == pygame.MOUSEBUTTONDOWN:
+                for tlacitko in TLACITKA:
+                    if pygame.Rect(tlacitko["rect"]).collidepoint(udalost.pos):
+                        hra()
 
+          # 1) Projděte události (pygame.event.get())
+          #    - QUIT → pygame.quit() a return -----------DONE
+          #    - MOUSEBUTTONDOWN (udalost.type == pygame.MOUSEBUTTONDOWN) ----DONE
+          #      Pro každé tlačítko zkontrolujte, zda bylo kliknuto:
+          #        pygame.Rect(tlacitko["rect"]).collidepoint(udalost.pos)
+          #      Podle akce (tlacitko["akce"]):
+          #        "hrat"  → zavolejte hra() a po návratu pokračujte
+          #        "zvuk"  → přepněte: zvuky_zapnuty = not zvuky_zapnuty
+          #        "konec" → pygame.quit() a return
+
+          # 2) Zavolejte nakresli_menu(okno)
+
+    pygame.display.flip()
 # -------------------------------------------------------
 # HERNÍ SMYČKA (hotová, pouze opravené skóre)
 # -------------------------------------------------------
@@ -291,4 +329,5 @@ def hra():
 # SPUŠTĚNÍ
 # -------------------------------------------------------
 menu()
+
 pygame.quit()
