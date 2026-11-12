@@ -9,7 +9,7 @@ jmena = []
 # Např. znamky[0] = [ ["1", "1", "2"], ["1", "2"], ["1", "1"] ]
 znamky = []
 
-SOUBOR = "znamky.txt"
+SOUBOR = ".txt"
 
 # === FUNKCE PRO PRÁCI SE SOUBORY A SEZNAMY ===
 
